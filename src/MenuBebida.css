@@ -1,0 +1,336 @@
+/* MenuBebida.css */
+
+.menu-bebida-container {
+    min-height: 100vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                      url('https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .bebida-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    border-radius: 25px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+    animation: fadeInDown 0.8s ease-out;
+  }
+  
+  .bebida-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #00b894, #00cec9, #74b9ff, #fd79a8);
+    animation: aguaFlow 3s ease-in-out infinite;
+  }
+  
+  @keyframes aguaFlow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+  
+  .bebida-header h1 {
+    color: #2c3e50;
+    margin: 0 0 15px 0;
+    font-size: 38px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #00b894, #74b9ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .bebida-header p {
+    color: #7f8c8d;
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  
+  .mezcal-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #fd79a8, #fdcb6e);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .bebida-categories {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .bebida-section {
+    margin-bottom: 50px;
+  }
+  
+  .bebida-category-title {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    animation: fadeInUp 0.6s ease-out;
+  }
+  
+  .bebida-category-title h2 {
+    color: #2c3e50;
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .bebida-icon {
+    font-size: 36px;
+  }
+  
+  .bebidas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+  }
+  
+  .bebida-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    animation: fadeInUp 0.6s ease-out;
+  }
+  
+  .bebida-card:nth-child(2n) {
+    animation-delay: 0.1s;
+  }
+  
+  .bebida-card:nth-child(3n) {
+    animation-delay: 0.2s;
+  }
+  
+  .bebida-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+  }
+  
+  .bebida-image {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .bebida-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .bebida-card:hover .bebida-image img {
+    transform: scale(1.1);
+  }
+  
+  .bebida-price {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: linear-gradient(135deg, #00b894, #00cec9);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 16px;
+    box-shadow: 0 5px 15px rgba(0, 184, 148, 0.4);
+  }
+  
+  .artesanal-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: linear-gradient(135deg, #fd79a8, #fdcb6e);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    animation: pulse 2s infinite;
+  }
+  
+  .bebida-content {
+    padding: 25px;
+  }
+  
+  .bebida-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 0 0 10px 0;
+  }
+  
+  .bebida-description {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin: 0 0 15px 0;
+    line-height: 1.5;
+  }
+  
+  .bebida-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .bebida-size {
+    font-size: 14px;
+    color: #6c757d;
+    font-weight: 600;
+  }
+  
+  .bebida-alcohol {
+    font-size: 12px;
+    background: rgba(214, 48, 49, 0.1);
+    color: #d63031;
+    padding: 4px 8px;
+    border-radius: 10px;
+    border: 1px solid rgba(214, 48, 49, 0.2);
+  }
+  
+  .bebida-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .bebida-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .bebida-btn.primary {
+    background: linear-gradient(135deg, #00b894, #00cec9);
+    color: white;
+    box-shadow: 0 8px 20px rgba(0, 184, 148, 0.3);
+  }
+  
+  .bebida-btn:hover {
+    transform: translateY(-2px);
+  }
+  
+  .bebida-btn.primary:hover {
+    box-shadow: 0 12px 30px rgba(0, 184, 148, 0.4);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .menu-bebida-container {
+      padding: 15px;
+      background-attachment: scroll;
+    }
+    
+    .bebida-header {
+      padding: 25px 20px;
+      margin-bottom: 30px;
+    }
+    
+    .bebida-header h1 {
+      font-size: 32px;
+    }
+    
+    .bebidas-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    
+    .bebida-card {
+      margin: 0 auto;
+      max-width: 400px;
+    }
+    
+    .bebida-content {
+      padding: 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .bebida-header {
+      padding: 20px 15px;
+    }
+    
+    .bebida-header h1 {
+      font-size: 28px;
+    }
+    
+    .bebida-content {
+      padding: 15px;
+    }
+    
+    .bebida-name {
+      font-size: 18px;
+    }
+  }
+  
+  /* Animaciones */
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
