@@ -1,115 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import { useApp } from './AppContext';
 import './MenuBebida.css';
 
 const MenuBebida = () => {
   const { actions } = useApp();
-  const [bebidas] = useState({
-    mezcales: [
-      {
-        id: 1,
-        nombre: "Mezcal Espadín Artesanal",
-        descripcion: "Mezcal tradicional de agave espadín, destilado en horno de tierra",
-        precio: 85,
-        tamaño: "60ml",
-        alcohol: "40% Vol",
-        imagen: "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-        artesanal: true
-      },
-      {
-        id: 2,
-        nombre: "Mezcal Tobalá",
-        descripcion: "Mezcal premium de agave tobalá silvestre, edición limitada",
-        precio: 150,
-        tamaño: "60ml",
-        alcohol: "45% Vol",
-        imagen: "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-        artesanal: true
-      },
-      {
-        id: 3,
-        nombre: "Mezcal con Gusano",
-        descripcion: "Mezcal tradicional con gusano de maguey, sabor auténtico oaxaqueño",
-        precio: 95,
-        tamaño: "60ml",
-        alcohol: "38% Vol",
-        imagen: "https://images.unsplash.com/photo-1574095651064-e8d8b6151822?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-        artesanal: false
-      }
-    ],
-    aguasFrescas: [
-      {
-        id: 4,
-        nombre: "Agua de Jamaica",
-        descripcion: "Refrescante agua de flor de jamaica con un toque de limón",
-        precio: 25,
-        tamaño: "500ml",
-        alcohol: "Sin alcohol",
-        imagen: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-        artesanal: true
-      },
-      {
-        id: 5,
-        nombre: "Agua de Chía con Limón",
-        descripcion: "Agua fresca de chía con limón y endulzante natural",
-        precio: 30,
-        tamaño: "500ml",
-        alcohol: "Sin alcohol",
-        imagen: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-        artesanal: true
-      },
-      {
-        id: 6,
-        nombre: "Horchata de Arroz",
-        descripcion: "Horchata tradicional oaxaqueña con canela y vainilla",
-        precio: 35,
-        tamaño: "500ml",
-        alcohol: "Sin alcohol",
-        imagen: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-        artesanal: true
-      }
-    ],
-    bebidasCalientes: [
-      {
-        id: 7,
-        nombre: "Chocolate Oaxaqueño",
-        descripcion: "Chocolate tradicional batido con molinillo, canela y almendras",
-        precio: 45,
-        tamaño: "300ml",
-        alcohol: "Sin alcohol",
-        imagen: "https://images.unsplash.com/photo-1542990253-0b8be23b4570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-        artesanal: true
-      },
-      {
-        id: 8,
-        nombre: "Café de Olla",
-        descripcion: "Café tradicional hervido en olla de barro con canela y piloncillo",
-        precio: 35,
-        tamaño: "250ml",
-        alcohol: "Sin alcohol",
-        imagen: "https://images.unsplash.com/photo-1497636577773-f1231844b336?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-        artesanal: true
-      },
-      {
-        id: 9,
-        nombre: "Atole de Granillo",
-        descripcion: "Atole tradicional de maíz granillo con canela y azúcar morena",
-        precio: 30,
-        tamaño: "300ml",
-        alcohol: "Sin alcohol",
-        imagen: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-        artesanal: true
-      }
-    ]
-  });
+  const [bebidas, setBebidas] = useState({
+  mezcales: [],
+  aguasFrescas: [],
+  bebidasCalientes: []
+});
+
+useEffect(() => {
+  fetch("http://localhost:8080/api/bebidas")
+    .then(res => res.json())
+    .then(data => {
+      const mezcales = data.filter(b => b.categoria === "mezcales");
+      const aguasFrescas = data.filter(b => b.categoria === "aguasFrescas");
+      const bebidasCalientes = data.filter(b => b.categoria === "bebidasCalientes");
+
+      setBebidas({ mezcales, aguasFrescas, bebidasCalientes });
+    })
+    .catch(err => console.error("Error al cargar bebidas", err));
+}, []);
+
 
   // Función para manejar acciones
   const agregarCarrito = (bebida) => {
-    console.log(`Agregando ${bebida.nombre} al carrito`);
-    // Agregar al carrito global y volver a la vista de orden
-    actions.addItem(bebida);
-    actions.setView('orden');
-  };
+  console.log(`Agregando ${bebida.nombre} al carrito`);
+
+  actions.addItem({
+    id: bebida.id, // ID del producto real
+    nombre: bebida.nombre,
+    precio: bebida.precio,
+    cantidad: 1,
+    tipo: "bebida", // importante para detalle_orden
+    producto_id: bebida.id // explícito por claridad
+  });
+
+  actions.setView('orden');
+};
 
   const volverAOrden = () => {
     actions.setView('orden');

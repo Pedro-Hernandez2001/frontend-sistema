@@ -58,38 +58,69 @@ const Mesero = () => {
       actions.logout();
     }
   };
+  const { state } = useApp();
+  const { currentUser } = state;
 
   // Función para cambiar el estado de una mesa
   const cambiarEstadoMesa = async (mesaId, nuevoEstado) => {
-    try {
-      console.log('🔄 Cambiando estado de mesa ID:', mesaId, 'a:', nuevoEstado);
-      
-      const response = await fetch(`http://localhost:8080/api/mesas/${mesaId}/estado`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ estado: nuevoEstado })
-      });
+      try {
+        console.log('🔄 Cambiando estado de mesa ID:', mesaId, 'a:', nuevoEstado);
 
-      const result = await response.json();
-      console.log('📋 Resultado cambio estado:', result);
+        // Si el estado es 'ocupada' creamos la orden primero
+        if (nuevoEstado === 'ocupada') {
+          if (!currentUser || !currentUser.id) {
+            alert('No hay mesero logueado para asignar la orden.');
+            return;
+          }
 
-      if (result.success) {
-        // RECARGAR DATOS DESDE EL BACKEND
-        await fetchMesas();
-        
-        // Mostrar notificación
-        const mesa = mesas.find(m => m.id === mesaId);
-        alert(`${mesa.numero} ahora está ${nuevoEstado}`);
-      } else {
-        alert('Error: ' + result.message);
+          const ordenResponse = await fetch('http://localhost:8080/api/ordenes', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              mesa_id: mesaId,
+              mesero_id: currentUser.id,
+              estado: 'pendiente',
+              total: 0
+            }),
+          });
+
+          const ordenResult = await ordenResponse.json();
+
+          if (!ordenResponse.ok) {
+            throw new Error(ordenResult.message || 'Error al crear la orden');
+          }
+
+          alert(`Orden creada para mesa ${mesaId} correctamente.`);
+        }
+
+        // Cambiar el estado de la mesa
+        const response = await fetch(`http://localhost:8080/api/mesas/${mesaId}/estado`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ estado: nuevoEstado })
+        });
+
+        const result = await response.json();
+        console.log('📋 Resultado cambio estado:', result);
+
+        if (result.success) {
+          await fetchMesas(); // asegúrate de que esta función también esté definida en tu componente
+
+          const mesa = mesas.find(m => m.id === mesaId);
+          alert(`${mesa.numero} ahora está ${nuevoEstado}`);
+        } else {
+          alert('Error: ' + result.message);
+        }
+      } catch (err) {
+        console.error('❌ Error cambiando estado:', err);
+        alert('Error al cambiar estado: ' + err.message);
       }
-    } catch (err) {
-      console.error('❌ Error cambiando estado:', err);
-      alert('Error al cambiar estado: ' + err.message);
-    }
-  };
+};
+
 
   // Función para manejar la selección de mesa
   const seleccionarMesa = (mesa) => {

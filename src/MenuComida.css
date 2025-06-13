@@ -3,7 +3,7 @@
 .menu-comida-container {
     min-height: 100vh;
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
-                      url('https://images.unsplash.com/photo-1566554273541-37a9ca77b91b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+                      url('https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -361,3 +361,36 @@
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.05); }
   }
+
+
+
+  .menu-header {
+  display: flex;
+  align-items: center; /* Centra verticalmente */
+  gap: 20px; /* Espacio entre botón y textos */
+  padding: 10px 20px;
+  position: relative;
+}
+
+.back-button {
+  flex-shrink: 0; /* Evita que el botón se reduzca */
+  background: rgba(108, 117, 125, 0.1);
+  color: #6c757d;
+  border: 2px solid rgba(108, 117, 125, 0.2);
+  padding: 10px 15px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.menu-texts {
+  flex-grow: 1; /* Ocupa el espacio restante */
+  text-align: center; /* Centra textos horizontalmente */
+}
+
+.menu-texts h1,
+.menu-texts p,
+.oaxaca-badge {
+  margin: 5px 0;
+}

@@ -15,6 +15,7 @@ const Orden = () => {
   };
 
   const handleConfirmPedido = () => {
+    console.log('Items en el pedido:', pedido.items);
     if (pedido.items.length === 0) {
       alert('Agrega algunos items al pedido antes de confirmar');
       return;
