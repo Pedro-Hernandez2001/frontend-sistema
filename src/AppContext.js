@@ -5,6 +5,7 @@ import React, { createContext, useContext, useReducer, useEffect } from 'react';
 const initialState = {
   currentView: 'login', // 'login', 'mesero', 'admin', 'orden', 'menuComida', 'menuBebida', 'menuPostre'
   userRole: null, // 'mesero', 'admin'
+  currentUser: null,
   selectedMesa: null,
   pedido: {
     mesa: null,
@@ -41,6 +42,7 @@ const appReducer = (state, action) => {
       return {
         ...state,
         userRole: action.payload.role,
+         currentUser: action.payload.user, 
         currentView: action.payload.role === 'admin' ? 'admin' : 'mesero'
       };
       
@@ -177,7 +179,7 @@ export const AppProvider = ({ children }) => {
   const actions = {
     setView: (view) => dispatch({ type: ActionTypes.SET_VIEW, payload: view }),
     
-    login: (role) => dispatch({ type: ActionTypes.LOGIN, payload: { role } }),
+    login: (user, role) => dispatch({ type: ActionTypes.LOGIN, payload: { user, role } }),
     
     logout: () => dispatch({ type: ActionTypes.LOGOUT }),
     
@@ -193,11 +195,42 @@ export const AppProvider = ({ children }) => {
     
     hideMenu: () => dispatch({ type: ActionTypes.HIDE_MENU }),
     
-    confirmPedido: () => {
-      // Aquí podrías enviar el pedido a un servidor
-      console.log('Pedido confirmado:', state.pedido);
-      alert(`Pedido confirmado para ${state.selectedMesa?.numero}\nTotal: $${state.pedido.total}`);
-      dispatch({ type: ActionTypes.CONFIRM_PEDIDO });
+    confirmPedido: async () => {
+      try {
+        // Preparar los datos del pedido
+        const pedidoData = {
+          mesa_id: state.selectedMesa?.id || state.selectedMesa,  // depende si selectedMesa es objeto o solo id
+          mesero_id: state.currentUser?.id,
+          estado: 'pendiente',
+          total: state.pedido.total
+          // fecha_creacion se asigna en la BD automáticamente
+        };
+
+        // Enviar la orden al backend
+        const response = await fetch('http://localhost:8080/api/ordenes', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(pedidoData),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result.message || 'Error al crear la orden');
+        }
+
+        console.log('Orden creada:', result);
+        alert(`Pedido confirmado para mesa ${state.selectedMesa?.numero || pedidoData.mesa_id}\nTotal: $${state.pedido.total}`);
+
+        // Limpiar pedido y volver a vista mesero
+        dispatch({ type: ActionTypes.CONFIRM_PEDIDO });
+
+      } catch (error) {
+        alert('No se pudo crear la orden: ' + error.message);
+        console.error(error);
+      }
     }
   };
 
